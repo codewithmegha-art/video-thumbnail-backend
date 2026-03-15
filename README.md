@@ -23,7 +23,7 @@
 
 git clone https://github.com/yourusername/video-thumbnail-backend.git
 
-cd video-thumbnail-backend
+cd backend
 
 ### 2. Install Dependencies
 
