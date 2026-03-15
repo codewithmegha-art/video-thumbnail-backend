@@ -1,71 +1,103 @@
-# Video Thumbnail Gallery – Frontend
+# Video Thumbnail Gallery – Backend
 
 ## Tech Stack
 
-* React
-* Vite
-* Material UI
-* React Query
-* Axios
-* React Router
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+* FFmpeg (for thumbnail extraction)
+* Multer (file upload)
 
 ## Features
 
-* Video gallery display
-* Search videos by title
-* Filter videos by tags
-* Video detail page
-* Video player
-* Thumbnail selection
-* Responsive UI
+* Upload video
+* Generate thumbnails automatically
+* Store video metadata
+* Retrieve video gallery
+* Select primary thumbnail
 
-## How to Run Frontend
+## How to Run Backend
 
 ### 1. Clone Repository
 
-git clone https://github.com/yourusername/video-thumbnail-frontend.git
+git clone https://github.com/yourusername/video-thumbnail-backend.git
 
-cd video-thumbnail-frontend
+cd video-thumbnail-backend
 
 ### 2. Install Dependencies
 
 npm install
 
-### 3. Start Development Server
+### 3. Setup Environment Variables
 
-npm run dev
+Create a .env file in the root directory.
 
-Frontend will run at:
+Example:
 
-http://localhost:5173
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/video-gallery
 
-## Backend Connection
+### 4. Start Server
 
-The frontend connects to the backend API at:
+npm start
 
-http://localhost:5000/api
+Server runs at:
 
-You can configure this inside:
+http://localhost:5000
 
-src/services/api.js
+## API Endpoints
 
-## Environment Variables
+GET /api/videos
+Fetch all videos
 
-No environment variables required for frontend.
+GET /api/videos/:id
+Fetch video details and thumbnails
 
-## Project Structure
+POST /api/videos/upload
+Upload a video file
 
-src
-components
-pages
-services
-App.jsx
-main.jsx
+POST /api/videos/:id/thumbnails/select
+Select primary thumbnail
+
+## Database Schema
+
+### Video
+
+* title (String)
+* description (String)
+* tags (Array)
+* videoUrl (String)
+* primaryThumbnail (ObjectId)
+* createdAt (Date)
+
+### Thumbnail
+
+* videoId (ObjectId)
+* url (String)
+* timestamp (Number)
+
+## Thumbnail Generation
+
+When a video is uploaded, FFmpeg extracts frames at different timestamps and saves them as thumbnail images. These thumbnails are stored on the server and referenced in the database.
+
+## Trade-offs / Shortcuts
+
+* Local file storage is used instead of cloud storage (AWS S3).
+* Thumbnail generation is synchronous for simplicity.
+* Basic validation implemented due to time constraints.
+
+## Folder Structure
+
+controllers
+models
+routes
+uploads
+server.js
 
 ## Notes
 
-This frontend application consumes APIs from the backend service to fetch videos, thumbnails, and update the primary thumbnail.
-
+The backend exposes REST APIs consumed by the frontend application to display videos and thumbnails.
 
 # Short Design Note
 
